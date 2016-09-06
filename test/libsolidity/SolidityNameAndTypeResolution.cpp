@@ -4020,6 +4020,26 @@ BOOST_AUTO_TEST_CASE(invalid_array_as_statement)
 	BOOST_CHECK(expectError(text, false) == Error::Type::TypeError);
 }
 
+BOOST_AUTO_TEST_CASE(shift_constant_left_negative_rvalue)
+{
+	char const* text = R"(
+		contract C {
+			uint public a = 0x42 << -8;
+		}
+	)";
+	BOOST_CHECK(expectError(text, false) == Error::Type::TypeError);
+}
+
+BOOST_AUTO_TEST_CASE(shift_constant_right_negative_rvalue)
+{
+	char const* text = R"(
+		contract C {
+			uint public a = 0x42 >> -8;
+		}
+	)";
+	BOOST_CHECK(expectError(text, false) == Error::Type::TypeError);
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 }
